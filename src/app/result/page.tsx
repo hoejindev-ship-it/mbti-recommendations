@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MBTI_DESCRIPTIONS } from "@/lib/mbti/descriptions";
+import { getCharacter } from "@/lib/mbti/characters";
 
 export default async function ResultPage() {
   const supabase = await createClient();
@@ -17,15 +18,29 @@ export default async function ResultPage() {
     .maybeSingle();
 
   if (!profile?.mbti) redirect("/test");
+  const character = getCharacter(profile.mbti);
 
   return (
-    <main style={{ maxWidth: 560, margin: "80px auto", padding: "0 16px" }}>
-      <p>나의 MBTI</p>
-      <h1 style={{ fontSize: 56 }}>{profile.mbti}</h1>
-      <p>{MBTI_DESCRIPTIONS[profile.mbti]}</p>
-      <p>
-        <Link href="/">홈으로</Link> · <Link href="/test">다시 검사하기</Link>
-      </p>
+    <main className="page" style={{ ["--accent" as string]: character.accent }}>
+      <div className="brand">
+        <div className="brand-badge">
+          검사 <em>결과</em>
+        </div>
+      </div>
+      <div className="card center">
+        <div className="seal">{profile.mbti}</div>
+        <h1>당신은 {character.name} 유형!</h1>
+        <p>{MBTI_DESCRIPTIONS[profile.mbti]}</p>
+        <div className="haori" />
+        <div className="stack">
+          <Link href="/" className="btn">
+            추천 받으러 가기
+          </Link>
+          <Link href="/test" className="btn btn-ghost">
+            다시 검사하기
+          </Link>
+        </div>
+      </div>
     </main>
   );
 }
