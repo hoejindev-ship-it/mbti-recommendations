@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { MBTI_DESCRIPTIONS } from "@/lib/mbti/descriptions";
+import { TOPICS } from "@/lib/mbti/topics";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -27,7 +28,14 @@ export default async function HomePage() {
           <p>
             <Link href="/test">다시 검사하기</Link>
           </p>
-          <p>여행 · 맛집 · 쇼핑 추천은 다음 단계에서 추가됩니다.</p>
+          <h2>어떤 추천을 받아볼까요?</h2>
+          <p>
+            {TOPICS.map((t) => (
+              <Link key={t.slug} href={`/recommend/${t.slug}`} style={{ marginRight: 16 }}>
+                {t.label}
+              </Link>
+            ))}
+          </p>
         </>
       ) : (
         <p>
