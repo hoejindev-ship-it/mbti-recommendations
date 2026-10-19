@@ -51,34 +51,45 @@ export default function TestPage() {
   }
 
   return (
-    <main style={{ maxWidth: 560, margin: "60px auto", padding: "0 16px" }}>
-      <p>
-        {index + 1} / {QUESTIONS.length}
-      </p>
-      <progress value={index + 1} max={QUESTIONS.length} style={{ width: "100%" }} />
-      <h2 style={{ margin: "32px 0" }}>{question.text}</h2>
-      <div style={{ display: "grid", gap: 8 }}>
-        {SCALE_LABELS.map((label, i) => (
-          <button
-            key={label}
-            type="button"
-            disabled={saving}
-            onClick={() => choose(i + 1)}
-            style={{
-              padding: 12,
-              fontWeight: answers[question.id] === i + 1 ? "bold" : "normal",
-            }}
-          >
-            {label}
-          </button>
-        ))}
+    <main className="page">
+      <div className="brand">
+        <div className="brand-badge">
+          성격 <em>검사</em>
+        </div>
+        <p className="brand-sub">
+          {index + 1} / {QUESTIONS.length}
+        </p>
       </div>
-      {error && <p role="alert">{error}</p>}
-      <p>
-        <button type="button" disabled={index === 0 || saving} onClick={() => setIndex(index - 1)}>
-          이전
-        </button>
-      </p>
+      <div className="card">
+        <div className="progress">
+          <span style={{ width: `${((index + 1) / QUESTIONS.length) * 100}%` }} />
+        </div>
+        <h2 className="question">{question.text}</h2>
+        <div className="stack">
+          {SCALE_LABELS.map((label, i) => (
+            <button
+              key={label}
+              type="button"
+              disabled={saving}
+              onClick={() => choose(i + 1)}
+              className={`choice${answers[question.id] === i + 1 ? " selected" : ""}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        {error && <p role="alert">{error}</p>}
+        <p style={{ marginTop: 16 }}>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            disabled={index === 0 || saving}
+            onClick={() => setIndex(index - 1)}
+          >
+            이전
+          </button>
+        </p>
+      </div>
     </main>
   );
 }

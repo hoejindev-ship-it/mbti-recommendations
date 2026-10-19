@@ -41,40 +41,50 @@ export default function LoginPage() {
   }
 
   return (
-    <main style={{ maxWidth: 360, margin: "80px auto", padding: "0 16px" }}>
-      <h1>{mode === "login" ? "로그인" : "회원가입"}</h1>
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
-        <input
-          type="email"
-          placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="비밀번호 (6자 이상)"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength={6}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "처리 중..." : mode === "login" ? "로그인" : "가입하기"}
-        </button>
-      </form>
-      {message && <p role="alert">{message}</p>}
-      <p>
-        <button
-          type="button"
-          onClick={() => {
-            setMode(mode === "login" ? "signup" : "login");
-            setMessage(null);
-          }}
-        >
-          {mode === "login" ? "계정이 없으신가요? 회원가입" : "이미 계정이 있으신가요? 로그인"}
-        </button>
-      </p>
+    <main className="page">
+      <div className="brand">
+        <div className="brand-badge">
+          MBTI <em>맞춤</em> 추천
+        </div>
+        <p className="brand-sub">나의 성격에 맞는 여행 · 맛집 · 쇼핑</p>
+      </div>
+      <div className="card">
+        <h1>{mode === "login" ? "로그인" : "회원가입"}</h1>
+        <div className="haori" />
+        <form onSubmit={handleSubmit} className="stack">
+          <input
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="비밀번호 (6자 이상)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+            required
+          />
+          <button type="submit" className="btn" disabled={loading}>
+            {loading ? "처리 중..." : mode === "login" ? "로그인" : "가입하기"}
+          </button>
+        </form>
+        {message && <p role="alert">{message}</p>}
+        <p style={{ marginTop: 16 }}>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => {
+              setMode(mode === "login" ? "signup" : "login");
+              setMessage(null);
+            }}
+          >
+            {mode === "login" ? "계정이 없으신가요? 회원가입" : "이미 계정이 있으신가요? 로그인"}
+          </button>
+        </p>
+      </div>
     </main>
   );
 }
