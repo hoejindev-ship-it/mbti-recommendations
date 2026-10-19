@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MBTI_DESCRIPTIONS } from "@/lib/mbti/descriptions";
 import { getCharacter } from "@/lib/mbti/characters";
+import Character from "@/components/Character";
 
 export default async function ResultPage() {
   const supabase = await createClient();
@@ -28,8 +29,10 @@ export default async function ResultPage() {
         </div>
       </div>
       <div className="card center">
-        <div className="seal">{profile.mbti}</div>
-        <h1>당신은 {character.name} 유형!</h1>
+        <Character mbti={profile.mbti} size={200} />
+        <div className="seal-tag">{profile.mbti}</div>
+        <h1>당신은 {character.name}!</h1>
+        <p className="muted">{character.title}</p>
         <p>{MBTI_DESCRIPTIONS[profile.mbti]}</p>
         <div className="haori" />
         <div className="stack">

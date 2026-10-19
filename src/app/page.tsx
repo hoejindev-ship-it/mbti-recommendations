@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { MBTI_DESCRIPTIONS } from "@/lib/mbti/descriptions";
 import { getCharacter } from "@/lib/mbti/characters";
 import { TOPICS } from "@/lib/mbti/topics";
+import Character from "@/components/Character";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -30,8 +31,10 @@ export default async function HomePage() {
       {mbti ? (
         <>
           <div className="card center">
-            <div className="seal">{mbti}</div>
-            <h1>{character.name} 유형</h1>
+            <Character mbti={mbti} size={170} />
+            <div className="seal-tag">{mbti}</div>
+            <h1>{character.name}</h1>
+            <p className="muted">{character.title}</p>
             <p>{MBTI_DESCRIPTIONS[mbti]}</p>
             <div className="haori" />
             <Link href="/test" className="btn btn-ghost">

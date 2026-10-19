@@ -41,7 +41,7 @@ export default async function RecommendPage({
           {topic.label} <em>추천</em>
         </div>
         <p className="brand-sub">
-          {profile.mbti} · {character.name} 유형
+          {profile.mbti} · {character.name} ({character.title})
         </p>
       </div>
 
