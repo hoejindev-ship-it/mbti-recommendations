@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Character from "@/components/Character";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,11 +47,16 @@ export default function LoginPage() {
         <div className="brand-badge">
           MBTI <em>맞춤</em> 추천
         </div>
-        <p className="brand-sub">나의 성격에 맞는 여행 · 맛집 · 쇼핑</p>
+        <p className="brand-sub">나와 닮은 강아지를 만나고, 성격에 맞는 여행 · 맛집 · 쇼핑을 추천받아요</p>
+        <div className="duo" style={{ marginTop: 12 }}>
+          <Character mbti="ISFP" size={92} />
+          <Character mbti="ESFP" size={110} />
+          <Character mbti="ENFJ" size={92} />
+        </div>
       </div>
       <div className="card">
         <h1>{mode === "login" ? "로그인" : "회원가입"}</h1>
-        <div className="haori" />
+        <div className="divider" />
         <form onSubmit={handleSubmit} className="stack">
           <input
             type="email"

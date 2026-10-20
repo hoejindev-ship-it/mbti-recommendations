@@ -25,7 +25,7 @@ export default async function HomePage() {
         <div className="brand-badge">
           MBTI <em>맞춤</em> 추천
         </div>
-        <p className="brand-sub">{user?.email} 님, 어서 오세요</p>
+        <p className="brand-sub">{user?.email} 님, 어서 오세요 🐾</p>
       </div>
 
       {mbti ? (
@@ -36,14 +36,14 @@ export default async function HomePage() {
             <h1>{character.name}</h1>
             <p className="muted">{character.title}</p>
             <p>{MBTI_DESCRIPTIONS[mbti]}</p>
-            <div className="haori" />
+            <div className="divider" />
             <Link href="/test" className="btn btn-ghost">
               다시 검사하기
             </Link>
           </div>
           <div className="card">
             <h2>어떤 추천을 받아볼까요?</h2>
-            <div className="haori" />
+            <div className="divider" />
             <div className="stack">
               {TOPICS.map((t) => (
                 <Link key={t.slug} href={`/recommend/${t.slug}`} className="btn">
@@ -54,7 +54,7 @@ export default async function HomePage() {
           </div>
           <div className="card">
             <h2>친구와 궁합 보기</h2>
-            <div className="haori" />
+            <div className="divider" />
             <Link href="/friends" className="btn">
               친구 · 궁합 페이지로
             </Link>
@@ -64,7 +64,7 @@ export default async function HomePage() {
         <div className="card center">
           <h1>성격 검사를 시작해 볼까요?</h1>
           <p className="muted">24개 문항에 답하면 나의 MBTI를 알 수 있어요.</p>
-          <div className="haori" />
+          <div className="divider" />
           <Link href="/test" className="btn">
             MBTI 검사 시작하기
           </Link>
@@ -72,7 +72,7 @@ export default async function HomePage() {
       )}
 
       <form action="/auth/signout" method="post" className="center" style={{ marginTop: 24 }}>
-        <button type="submit" className="btn btn-ghost" style={{ color: "var(--paper)", borderColor: "var(--paper)" }}>
+        <button type="submit" className="btn btn-ghost">
           로그아웃
         </button>
       </form>

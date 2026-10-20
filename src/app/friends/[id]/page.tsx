@@ -62,7 +62,7 @@ export default async function CompatibilityPage({
             <div>{friend.nickname}</div>
           </div>
         </div>
-        <div className="haori" />
+        <div className="divider" />
         <div className="score">{result.score}점</div>
         <h1>{result.grade}</h1>
         <p>{result.headline}</p>
@@ -70,7 +70,7 @@ export default async function CompatibilityPage({
 
       <div className="card">
         <h2>이런 점이 잘 맞아요</h2>
-        <div className="haori" />
+        <div className="divider" />
         <ul className="bullets">
           {result.strengths.map((t) => (
             <li key={t}>{t}</li>
@@ -80,7 +80,7 @@ export default async function CompatibilityPage({
 
       <div className="card">
         <h2>이런 점을 보완해 보세요</h2>
-        <div className="haori" />
+        <div className="divider" />
         <ul className="bullets">
           {result.complements.map((t) => (
             <li key={t}>{t}</li>
@@ -90,7 +90,7 @@ export default async function CompatibilityPage({
 
       <div className="card">
         <h2>성향 비교</h2>
-        <div className="haori" />
+        <div className="divider" />
         <div className="stack">
           {result.axes.map((a) => (
             <div key={a.axis} className="axis">

@@ -31,10 +31,10 @@ export default async function ResultPage() {
       <div className="card center">
         <Character mbti={profile.mbti} size={200} />
         <div className="seal-tag">{profile.mbti}</div>
-        <h1>당신은 {character.name}!</h1>
+        <h1>당신은 {character.name} 같은 사람!</h1>
         <p className="muted">{character.title}</p>
         <p>{MBTI_DESCRIPTIONS[profile.mbti]}</p>
-        <div className="haori" />
+        <div className="divider" />
         <div className="stack">
           <Link href="/" className="btn">
             추천 받으러 가기
