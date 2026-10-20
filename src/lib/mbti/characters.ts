@@ -1,54 +1,53 @@
-// 유형별 오리지널 캐릭터 설정. 모든 이름/외형은 이 서비스를 위해 새로 만든 것이다.
-export type HairStyle = "short" | "spiky" | "bob" | "long" | "buns" | "ponytail" | "wavy";
-export type Pattern = "check" | "stripe" | "wave" | "plain" | "star" | "diamond";
-export type Accessory =
+// 유형별 어울리는 강아지. 견종과 성격 설명은 참고했고, 그림은 직접 그린 SVG다.
+export type Ears = "pointy" | "bat" | "fold" | "floppy" | "longfloppy" | "puff";
+export type Mask =
   | "none"
-  | "headband"
-  | "ribbon"
-  | "flower"
-  | "glasses"
-  | "scarf"
-  | "earring"
-  | "cap"
-  | "moon"
-  | "fan";
-export type Eyes = "stern" | "soft" | "sleepy" | "bright";
+  | "husky"
+  | "blaze"
+  | "beagle"
+  | "eyepatch"
+  | "collie"
+  | "shepherd"
+  | "shiba"
+  | "pug"
+  | "schnauzer";
 
 export interface CharacterTheme {
   name: string;
   title: string;
   accent: string;
-  hair: string;
-  hairStyle: HairStyle;
-  haori: string;
-  haoriAlt: string;
-  pattern: Pattern;
-  accessory: Accessory;
-  accessoryColor: string;
-  eyes: Eyes;
-  eyeColor: string;
+  fur: string;
+  fur2: string;
+  muzzle: string;
+  nose: string;
+  ears: Ears;
+  mask: Mask;
+  fluff: boolean;
+  wrinkle: boolean;
+  tongue: boolean;
+  collar: string;
 }
 
 export const CHARACTERS: Record<string, CharacterTheme> = {
-  ISTJ: { name: "서진", title: "곧은 파수꾼", accent: "#46607a", hair: "#1c1c24", hairStyle: "short", haori: "#46607a", haoriAlt: "#1c2630", pattern: "check", accessory: "none", accessoryColor: "#fff", eyes: "stern", eyeColor: "#3a5a8a" },
-  ISFJ: { name: "하윤", title: "다정한 수호자", accent: "#d98aa6", hair: "#5a3a2a", hairStyle: "bob", haori: "#f0b6c6", haoriAlt: "#a8566f", pattern: "plain", accessory: "ribbon", accessoryColor: "#b8324f", eyes: "soft", eyeColor: "#5a3a2a" },
-  INFJ: { name: "해린", title: "달빛 조언자", accent: "#9a68d6", hair: "#241a38", hairStyle: "long", haori: "#7a52b8", haoriAlt: "#2a1a48", pattern: "star", accessory: "moon", accessoryColor: "#f3e6a0", eyes: "soft", eyeColor: "#7a52b8" },
-  INTJ: { name: "이한", title: "냉철한 전략가", accent: "#d01c3a", hair: "#c9ccd6", hairStyle: "spiky", haori: "#1a1a26", haoriAlt: "#d01c3a", pattern: "plain", accessory: "glasses", accessoryColor: "#222", eyes: "stern", eyeColor: "#d01c3a" },
-  ISTP: { name: "도윤", title: "조용한 해결사", accent: "#8a9a3e", hair: "#2a2a22", hairStyle: "spiky", haori: "#6a7430", haoriAlt: "#2a2e14", pattern: "stripe", accessory: "scarf", accessoryColor: "#d9d2b0", eyes: "sleepy", eyeColor: "#8a9a3e" },
-  ISFP: { name: "연우", title: "꽃길의 예술가", accent: "#ec8aa6", hair: "#7a4a3a", hairStyle: "long", haori: "#f4c0a8", haoriAlt: "#c0705a", pattern: "diamond", accessory: "flower", accessoryColor: "#e8506e", eyes: "soft", eyeColor: "#c0705a" },
-  INFP: { name: "소율", title: "별을 보는 몽상가", accent: "#f2c230", hair: "#f2d04a", hairStyle: "short", haori: "#f2c230", haoriAlt: "#7a5a10", pattern: "star", accessory: "none", accessoryColor: "#fff", eyes: "soft", eyeColor: "#a87a10" },
-  INTP: { name: "시우", title: "안개 속 탐구자", accent: "#3fb0a8", hair: "#2a5a66", hairStyle: "long", haori: "#3fb0a8", haoriAlt: "#14404a", pattern: "wave", accessory: "none", accessoryColor: "#fff", eyes: "sleepy", eyeColor: "#3fb0a8" },
-  ESTP: { name: "태오", title: "거침없는 모험가", accent: "#e0782a", hair: "#3a2418", hairStyle: "spiky", haori: "#e0782a", haoriAlt: "#4a2410", pattern: "stripe", accessory: "headband", accessoryColor: "#f4f0e0", eyes: "bright", eyeColor: "#e0782a" },
-  ESFP: { name: "하준", title: "무대 위의 불꽃", accent: "#4f86e0", hair: "#1c3a8a", hairStyle: "wavy", haori: "#4f86e0", haoriAlt: "#14286a", pattern: "diamond", accessory: "earring", accessoryColor: "#f0c040", eyes: "bright", eyeColor: "#4f86e0" },
-  ENFP: { name: "나래", title: "자유로운 불꽃놀이", accent: "#f08a3a", hair: "#e87a30", hairStyle: "buns", haori: "#f6b04a", haoriAlt: "#b8501a", pattern: "star", accessory: "flower", accessoryColor: "#fff2c8", eyes: "bright", eyeColor: "#b8501a" },
-  ENTP: { name: "지호", title: "장난꾸러기 발명가", accent: "#b04a8a", hair: "#4a2a5a", hairStyle: "wavy", haori: "#b04a8a", haoriAlt: "#3a1a48", pattern: "check", accessory: "fan", accessoryColor: "#f0e0a0", eyes: "bright", eyeColor: "#b04a8a" },
-  ESTJ: { name: "민재", title: "믿음직한 지휘자", accent: "#5a8a4a", hair: "#4a3020", hairStyle: "short", haori: "#5a8a4a", haoriAlt: "#1e3a18", pattern: "stripe", accessory: "cap", accessoryColor: "#2a2a2a", eyes: "stern", eyeColor: "#5a8a4a" },
-  ESFJ: { name: "서아", title: "따스한 이웃", accent: "#e8731a", hair: "#a04a20", hairStyle: "ponytail", haori: "#f08a3a", haoriAlt: "#a04a1a", pattern: "wave", accessory: "ribbon", accessoryColor: "#fff2c8", eyes: "soft", eyeColor: "#a04a20" },
-  ENFJ: { name: "하람", title: "이끄는 등불", accent: "#2f8f6b", hair: "#1a2438", hairStyle: "short", haori: "#2f8f6b", haoriAlt: "#a8dcc4", pattern: "wave", accessory: "headband", accessoryColor: "#e0c060", eyes: "soft", eyeColor: "#2f8f6b" },
-  ENTJ: { name: "도현", title: "야망의 지휘관", accent: "#c8a24a", hair: "#1c1814", hairStyle: "ponytail", haori: "#1c1814", haoriAlt: "#c8a24a", pattern: "diamond", accessory: "earring", accessoryColor: "#c8a24a", eyes: "stern", eyeColor: "#c8a24a" },
+  INFJ: { name: "진돗개", title: "깔끔하고 예민한 이상주의자", accent: "#c9a27a", fur: "#fbf6ec", fur2: "#ecd9bc", muzzle: "#fffdf8", nose: "#2b2b2b", ears: "pointy", mask: "none", fluff: false, wrinkle: false, tongue: false, collar: "#e8836b" },
+  INTJ: { name: "잭 러셀 테리어", title: "예리하고 민첩한 전략가", accent: "#b9783f", fur: "#fffaf2", fur2: "#b9783f", muzzle: "#fffaf2", nose: "#2b2b2b", ears: "fold", mask: "eyepatch", fluff: false, wrinkle: false, tongue: false, collar: "#3f7ab8" },
+  ISTP: { name: "비숑", title: "에너지 넘치고 지치지 않는 해결사", accent: "#8fb8d8", fur: "#fffdf7", fur2: "#f3ecdc", muzzle: "#fffdf7", nose: "#2b2b2b", ears: "puff", mask: "none", fluff: true, wrinkle: false, tongue: false, collar: "#6fb3a8" },
+  ISTJ: { name: "허스키", title: "신사적이고 유순한 원칙주의자", accent: "#6b7a90", fur: "#f7f7f9", fur2: "#59606b", muzzle: "#ffffff", nose: "#2b2b2b", ears: "pointy", mask: "husky", fluff: false, wrinkle: false, tongue: false, collar: "#d9534f" },
+  INTP: { name: "비글", title: "똑똑하고 엉뚱한 사고뭉치", accent: "#b87333", fur: "#fffaf0", fur2: "#b5651d", muzzle: "#fffaf0", nose: "#2b2b2b", ears: "longfloppy", mask: "beagle", fluff: false, wrinkle: false, tongue: false, collar: "#5aa0d8" },
+  ISFJ: { name: "슈나우저", title: "예민하고 까칠하지만 활발한 수호자", accent: "#8c93a0", fur: "#9aa0ab", fur2: "#6d7380", muzzle: "#9aa0ab", nose: "#2b2b2b", ears: "fold", mask: "schnauzer", fluff: false, wrinkle: false, tongue: false, collar: "#e6b34a" },
+  ISFP: { name: "시바견", title: "태평하고 느긋한 자유로운 영혼", accent: "#e09a4a", fur: "#e8a057", fur2: "#fff1d8", muzzle: "#fff1d8", nose: "#2b2b2b", ears: "pointy", mask: "shiba", fluff: false, wrinkle: false, tongue: false, collar: "#c94f4f" },
+  INFP: { name: "푸들", title: "상호작용을 잘하는 감성 몽상가", accent: "#b9703a", fur: "#b97a45", fur2: "#a5683a", muzzle: "#c58a55", nose: "#2b2b2b", ears: "puff", mask: "none", fluff: true, wrinkle: false, tongue: false, collar: "#e86f8f" },
+  ENTP: { name: "불독", title: "웃기고 창의적인 토론가", accent: "#d4b48a", fur: "#f1dcb9", fur2: "#d9b78a", muzzle: "#fbeed6", nose: "#3a2c26", ears: "fold", mask: "none", fluff: false, wrinkle: true, tongue: false, collar: "#5b8fd9" },
+  ESTP: { name: "레브라도 리트리버", title: "적응력이 뛰어나고 잘 따르는 모험가", accent: "#d9a85a", fur: "#efcf8e", fur2: "#d8ac5e", muzzle: "#f6dfae", nose: "#2b2b2b", ears: "floppy", mask: "none", fluff: false, wrinkle: false, tongue: true, collar: "#3fa37a" },
+  ESTJ: { name: "보더콜리", title: "지능이 높은 믿음직한 관리자", accent: "#4a5568", fur: "#33363d", fur2: "#222428", muzzle: "#ffffff", nose: "#111", ears: "fold", mask: "collie", fluff: false, wrinkle: false, tongue: false, collar: "#e8a33a" },
+  ENTJ: { name: "셰퍼드", title: "지능과 체력이 높은 지휘관", accent: "#a8743a", fur: "#d9a45f", fur2: "#2f2a26", muzzle: "#4a3a30", nose: "#1a1a1a", ears: "bat", mask: "shepherd", fluff: false, wrinkle: false, tongue: false, collar: "#c0392b" },
+  ENFP: { name: "퍼그", title: "개성이 풍부한 분위기 메이커", accent: "#a27850", fur: "#e8c58d", fur2: "#4a3a30", muzzle: "#4a3a30", nose: "#1a1a1a", ears: "fold", mask: "pug", fluff: false, wrinkle: true, tongue: false, collar: "#f08a3a" },
+  ESFJ: { name: "닥스훈트", title: "아기 같고 애교가 많은 친화력왕", accent: "#8a4b2a", fur: "#8a4b2a", fur2: "#6d371c", muzzle: "#c58a5a", nose: "#1a1a1a", ears: "longfloppy", mask: "none", fluff: false, wrinkle: false, tongue: true, collar: "#e86f8f" },
+  ENFJ: { name: "골든 리트리버", title: "짝꿍을 배려하는 따뜻한 리더", accent: "#e0a850", fur: "#f0bc66", fur2: "#d9993a", muzzle: "#f8d796", nose: "#2b2b2b", ears: "floppy", mask: "none", fluff: false, wrinkle: false, tongue: true, collar: "#5aa0d8" },
+  ESFP: { name: "웰시코기", title: "호기심 많고 겁 없는 분위기왕", accent: "#e88a3a", fur: "#f0a050", fur2: "#fff3e0", muzzle: "#fff3e0", nose: "#2b2b2b", ears: "bat", mask: "blaze", fluff: false, wrinkle: false, tongue: true, collar: "#3fa37a" },
 };
 
-const FALLBACK = CHARACTERS.ISTJ;
+const FALLBACK = CHARACTERS.ESFP;
 
 export function getCharacter(mbti: string | null | undefined): CharacterTheme {
   return (mbti && CHARACTERS[mbti]) || FALLBACK;

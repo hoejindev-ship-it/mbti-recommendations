@@ -46,7 +46,7 @@ export default async function FriendsPage() {
 
       <div className="card">
         <h2>친구 추가</h2>
-        <div className="haori" />
+        <div className="divider" />
         <AddFriendForm />
         <p className="muted" style={{ marginTop: 12 }}>
           상대가 수락해야 서로의 MBTI가 보여요.
@@ -56,7 +56,7 @@ export default async function FriendsPage() {
       {incoming.length > 0 && (
         <div className="card">
           <h2>받은 요청</h2>
-          <div className="haori" />
+          <div className="divider" />
           <div className="stack">
             {incoming.map((r) => (
               <div key={r.friendship_id} className="row" style={{ justifyContent: "space-between" }}>
@@ -83,7 +83,7 @@ export default async function FriendsPage() {
 
       <div className="card">
         <h2>친구 목록 ({friends.length})</h2>
-        <div className="haori" />
+        <div className="divider" />
         {friends.length === 0 ? (
           <p>아직 친구가 없어요. 위에서 이메일로 요청을 보내 보세요.</p>
         ) : (
@@ -129,7 +129,7 @@ export default async function FriendsPage() {
       {outgoing.length > 0 && (
         <div className="card">
           <h2>보낸 요청</h2>
-          <div className="haori" />
+          <div className="divider" />
           <div className="stack">
             {outgoing.map((r) => (
               <div key={r.friendship_id} className="row" style={{ justifyContent: "space-between" }}>
