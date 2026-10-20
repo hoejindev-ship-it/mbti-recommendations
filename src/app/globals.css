@@ -290,3 +290,59 @@ input:focus {
   border: 2px solid #000;
   border-radius: 4px;
 }
+
+/* 친구 / 궁합 */
+.friend {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--paper-edge);
+}
+.friend .row {
+  grid-column: 1 / -1;
+}
+.friend-info {
+  min-width: 0;
+}
+.duo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.duo-x {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+.score {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--accent);
+}
+.bullets {
+  display: grid;
+  gap: 12px;
+  padding-left: 20px;
+}
+.axis-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tag {
+  padding: 1px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 10px;
+}
+.tag.same {
+  background: #2f8f6b;
+}
+.tag.diff {
+  background: #b04a63;
+}

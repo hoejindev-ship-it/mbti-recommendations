@@ -52,6 +52,13 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
+          <div className="card">
+            <h2>친구와 궁합 보기</h2>
+            <div className="haori" />
+            <Link href="/friends" className="btn">
+              친구 · 궁합 페이지로
+            </Link>
+          </div>
         </>
       ) : (
         <div className="card center">
