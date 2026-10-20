@@ -59,6 +59,16 @@ export default async function HomePage() {
               친구 · 궁합 페이지로
             </Link>
           </div>
+          <div className="card">
+            <h2>MBTI 유형 도감</h2>
+            <div className="divider" />
+            <p className="muted" style={{ marginBottom: 12 }}>
+              16가지 유형의 성격과 어울리는 강아지를 알아봐요.
+            </p>
+            <Link href="/types" className="btn">
+              유형 도감 보기
+            </Link>
+          </div>
         </>
       ) : (
         <div className="card center">
