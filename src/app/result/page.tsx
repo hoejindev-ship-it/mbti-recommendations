@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { MBTI_DESCRIPTIONS } from "@/lib/mbti/descriptions";
 import { getCharacter } from "@/lib/mbti/characters";
 import Character from "@/components/Character";
+import AxisBars from "@/components/AxisBars";
+import { parseScores } from "@/lib/mbti/score";
 
 export default async function ResultPage() {
   const supabase = await createClient();
@@ -14,12 +16,13 @@ export default async function ResultPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("mbti")
+    .select("mbti, scores")
     .eq("user_id", user.id)
     .maybeSingle();
 
   if (!profile?.mbti) redirect("/test");
   const character = getCharacter(profile.mbti);
+  const scores = parseScores(profile.scores);
 
   return (
     <main className="page" style={{ ["--accent" as string]: character.accent }}>
@@ -34,6 +37,12 @@ export default async function ResultPage() {
         <h1>당신은 {character.name} 같은 사람!</h1>
         <p className="muted">{character.title}</p>
         <p>{MBTI_DESCRIPTIONS[profile.mbti]}</p>
+        <div className="divider" />
+        {scores ? (
+          <AxisBars scores={scores} />
+        ) : (
+          <p className="muted">다시 검사하면 E/I, S/N, T/F, J/P 비율을 그래프로 볼 수 있어요.</p>
+        )}
         <div className="divider" />
         <div className="stack">
           <Link href="/" className="btn">

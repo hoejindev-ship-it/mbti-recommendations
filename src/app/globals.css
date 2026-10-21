@@ -208,6 +208,10 @@ input:focus {
 .center {
   text-align: center;
 }
+.center > svg {
+  display: block;
+  margin: 0 auto;
+}
 
 /* 검사 */
 .progress {
@@ -409,4 +413,70 @@ input:focus {
   background: #fff;
   border: 3px solid var(--paper-edge);
   border-radius: 999px;
+}
+
+/* 축별 비율 그래프 */
+.bars {
+  display: grid;
+  gap: 18px;
+  text-align: left;
+}
+.bar-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  opacity: 0.65;
+}
+.bar-labels .win {
+  opacity: 1;
+  color: var(--ink);
+}
+.bar-labels strong {
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+.bar-track {
+  position: relative;
+  height: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 3px solid var(--paper-edge);
+  border-radius: 999px;
+}
+.bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--accent);
+  transition: width 0.4s;
+}
+.bar-fill.from-left {
+  left: 0;
+  border-radius: 999px 0 0 999px;
+}
+.bar-fill.from-right {
+  right: 0;
+  border-radius: 0 999px 999px 0;
+}
+.bar-mid {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--ink);
+  opacity: 0.25;
+}
+.bar-note {
+  margin-top: 4px;
+}
+.resume {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 3px dashed var(--paper-edge);
+  border-radius: 18px;
+  font-size: 0.9rem;
 }

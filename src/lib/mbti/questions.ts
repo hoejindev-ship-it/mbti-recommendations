@@ -8,6 +8,8 @@ export interface Question {
   text: string;
 }
 
+export const AXES: Axis[] = ["EI", "SN", "TF", "JP"];
+
 export const SCALE_LABELS = [
   "전혀 아니다",
   "아니다",
@@ -16,33 +18,75 @@ export const SCALE_LABELS = [
   "매우 그렇다",
 ] as const;
 
-export const QUESTIONS: Question[] = [
-  // E / I
-  { id: 1, axis: "EI", agree: "first", text: "처음 보는 사람들과도 금방 대화를 시작한다." },
-  { id: 2, axis: "EI", agree: "second", text: "사람들과 어울린 뒤에는 혼자만의 시간이 꼭 필요하다." },
-  { id: 3, axis: "EI", agree: "first", text: "주말에는 집보다 밖에서 사람들을 만나는 편이 즐겁다." },
-  { id: 4, axis: "EI", agree: "second", text: "여러 명이 있는 자리에서는 듣는 쪽이 더 편하다." },
-  { id: 5, axis: "EI", agree: "first", text: "생각은 말로 꺼내면서 정리될 때가 많다." },
-  { id: 6, axis: "EI", agree: "second", text: "친한 사람 몇 명과 깊게 어울리는 것이 넓게 어울리는 것보다 좋다." },
-  // S / N
-  { id: 7, axis: "SN", agree: "first", text: "새로운 방법보다 이미 검증된 방법을 선호한다." },
-  { id: 8, axis: "SN", agree: "second", text: "눈앞의 사실보다 그 뒤에 숨은 의미나 가능성이 더 궁금하다." },
-  { id: 9, axis: "SN", agree: "first", text: "설명을 들을 때 구체적인 예시와 사실이 있어야 이해가 잘 된다." },
-  { id: 10, axis: "SN", agree: "second", text: "공상이나 상상에 빠지는 시간이 많다." },
-  { id: 11, axis: "SN", agree: "first", text: "일을 할 때 현실적이고 실용적인 면을 먼저 본다." },
-  { id: 12, axis: "SN", agree: "second", text: "아직 없는 새로운 아이디어를 떠올리는 것이 즐겁다." },
-  // T / F
-  { id: 13, axis: "TF", agree: "first", text: "결정을 내릴 때 감정보다 논리와 원칙을 우선한다." },
-  { id: 14, axis: "TF", agree: "second", text: "상대의 기분이 상할까 봐 직설적인 말을 삼킬 때가 많다." },
-  { id: 15, axis: "TF", agree: "first", text: "갈등이 생기면 누가 옳은지부터 따져 보는 편이다." },
-  { id: 16, axis: "TF", agree: "second", text: "다른 사람의 고민을 들으면 내 일처럼 마음이 쓰인다." },
-  { id: 17, axis: "TF", agree: "first", text: "객관적인 근거가 없는 주장은 쉽게 믿지 않는다." },
-  { id: 18, axis: "TF", agree: "second", text: "일의 결과만큼 함께하는 사람들의 분위기도 중요하다." },
-  // J / P
-  { id: 19, axis: "JP", agree: "first", text: "여행이나 약속은 미리 계획을 세워 두어야 마음이 편하다." },
-  { id: 20, axis: "JP", agree: "second", text: "그날 기분에 따라 즉흥적으로 움직이는 것이 좋다." },
-  { id: 21, axis: "JP", agree: "first", text: "할 일은 마감보다 훨씬 일찍 끝내 두는 편이다." },
-  { id: 22, axis: "JP", agree: "second", text: "계획이 갑자기 바뀌어도 크게 스트레스받지 않는다." },
-  { id: 23, axis: "JP", agree: "first", text: "물건과 일정이 정해진 자리에 정돈되어 있어야 한다." },
-  { id: 24, axis: "JP", agree: "second", text: "마지막 순간에 몰아서 할 때 집중이 더 잘 된다." },
-];
+// 축마다 앞 글자/뒤 글자 문항을 6개씩 두어 "그렇다"만 고르는 편향이 점수에 쏠리지 않게 한다.
+const BY_AXIS: Record<Axis, [Question["agree"], string][]> = {
+  EI: [
+    ["first", "처음 보는 사람들과도 금방 대화를 시작한다."],
+    ["second", "사람들과 어울린 뒤에는 혼자만의 시간이 꼭 필요하다."],
+    ["first", "주말에는 집보다 밖에서 사람들을 만나는 편이 즐겁다."],
+    ["second", "여러 명이 있는 자리에서는 듣는 쪽이 더 편하다."],
+    ["first", "생각은 말로 꺼내면서 정리될 때가 많다."],
+    ["second", "친한 사람 몇 명과 깊게 어울리는 것이 넓게 어울리는 것보다 좋다."],
+    ["first", "모임에서 분위기를 띄우거나 이야기를 이끄는 편이다."],
+    ["second", "말하기 전에 머릿속으로 충분히 정리해야 마음이 놓인다."],
+    ["first", "전화나 메시지보다 직접 만나서 이야기하는 것이 편하다."],
+    ["second", "약속이 갑자기 취소되면 은근히 반갑다."],
+    ["first", "새로운 모임이나 행사에 가는 것이 기대된다."],
+    ["second", "많은 사람 앞에서 주목받는 일은 부담스럽다."],
+  ],
+  SN: [
+    ["first", "새로운 방법보다 이미 검증된 방법을 선호한다."],
+    ["second", "눈앞의 사실보다 그 뒤에 숨은 의미나 가능성이 더 궁금하다."],
+    ["first", "설명을 들을 때 구체적인 예시와 사실이 있어야 이해가 잘 된다."],
+    ["second", "공상이나 상상에 빠지는 시간이 많다."],
+    ["first", "일을 할 때 현실적이고 실용적인 면을 먼저 본다."],
+    ["second", "아직 없는 새로운 아이디어를 떠올리는 것이 즐겁다."],
+    ["first", "일할 때 매뉴얼이나 순서가 정해져 있으면 편하다."],
+    ["second", "대화 중에 이야기가 다른 주제로 자주 번진다."],
+    ["first", "미래의 가능성보다 지금 눈앞의 사실에 집중한다."],
+    ["second", "일이 어떻게 연결되는지 큰 그림을 먼저 보려 한다."],
+    ["first", "처음 가 보는 길보다 이미 아는 길로 가는 것이 편하다."],
+    ["second", "정해진 방식보다 나만의 방식으로 해 보고 싶다."],
+  ],
+  TF: [
+    ["first", "결정을 내릴 때 감정보다 논리와 원칙을 우선한다."],
+    ["second", "상대의 기분이 상할까 봐 직설적인 말을 삼킬 때가 많다."],
+    ["first", "갈등이 생기면 누가 옳은지부터 따져 보는 편이다."],
+    ["second", "다른 사람의 고민을 들으면 내 일처럼 마음이 쓰인다."],
+    ["first", "객관적인 근거가 없는 주장은 쉽게 믿지 않는다."],
+    ["second", "일의 결과만큼 함께하는 사람들의 분위기도 중요하다."],
+    ["first", "누군가 고민을 말하면 공감보다 해결 방법이 먼저 떠오른다."],
+    ["second", "상대가 서운해할까 봐 결정을 미룬 적이 있다."],
+    ["first", "칭찬보다 정확한 평가와 피드백이 더 도움이 된다."],
+    ["second", "영화나 이야기를 보며 쉽게 감정이입한다."],
+    ["first", "옳고 그름이 분명하지 않으면 답답하다."],
+    ["second", "다른 사람의 기분이 내 기분에 크게 영향을 준다."],
+  ],
+  JP: [
+    ["first", "여행이나 약속은 미리 계획을 세워 두어야 마음이 편하다."],
+    ["second", "그날 기분에 따라 즉흥적으로 움직이는 것이 좋다."],
+    ["first", "할 일은 마감보다 훨씬 일찍 끝내 두는 편이다."],
+    ["second", "계획이 갑자기 바뀌어도 크게 스트레스받지 않는다."],
+    ["first", "물건과 일정이 정해진 자리에 정돈되어 있어야 한다."],
+    ["second", "마지막 순간에 몰아서 할 때 집중이 더 잘 된다."],
+    ["first", "해야 할 일 목록을 만들고 하나씩 지우는 것이 즐겁다."],
+    ["second", "할 일이 많아도 마음이 내킬 때 시작한다."],
+    ["first", "결정을 내리고 나면 마음이 편하다."],
+    ["second", "선택지를 열어 두고 마지막까지 고민하는 편이다."],
+    ["first", "약속 시간보다 일찍 도착하는 편이다."],
+    ["second", "여행에서 계획에 없던 곳에 들르는 것이 더 재미있다."],
+  ],
+};
+
+// 같은 축 문항이 연달아 나오지 않도록 축을 번갈아 배치한다.
+export const QUESTIONS: Question[] = (() => {
+  const result: Question[] = [];
+  const perAxis = BY_AXIS.EI.length;
+  for (let i = 0; i < perAxis; i++) {
+    for (const axis of AXES) {
+      const [agree, text] = BY_AXIS[axis][i];
+      result.push({ id: result.length + 1, axis, agree, text });
+    }
+  }
+  return result;
+})();

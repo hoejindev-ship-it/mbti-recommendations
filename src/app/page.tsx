@@ -4,6 +4,9 @@ import { MBTI_DESCRIPTIONS } from "@/lib/mbti/descriptions";
 import { getCharacter } from "@/lib/mbti/characters";
 import { TOPICS } from "@/lib/mbti/topics";
 import Character from "@/components/Character";
+import AxisBars from "@/components/AxisBars";
+import { parseScores } from "@/lib/mbti/score";
+import { QUESTIONS } from "@/lib/mbti/questions";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -13,11 +16,12 @@ export default async function HomePage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("mbti")
+    .select("mbti, scores")
     .eq("user_id", user?.id ?? "")
     .maybeSingle();
   const mbti = profile?.mbti;
   const character = getCharacter(mbti);
+  const scores = parseScores(profile?.scores);
 
   return (
     <main className="page" style={{ ["--accent" as string]: character.accent }}>
@@ -37,6 +41,12 @@ export default async function HomePage() {
             <p className="muted">{character.title}</p>
             <p>{MBTI_DESCRIPTIONS[mbti]}</p>
             <div className="divider" />
+            {scores && (
+              <>
+                <AxisBars scores={scores} />
+                <div className="divider" />
+              </>
+            )}
             <Link href="/test" className="btn btn-ghost">
               다시 검사하기
             </Link>
@@ -73,7 +83,7 @@ export default async function HomePage() {
       ) : (
         <div className="card center">
           <h1>성격 검사를 시작해 볼까요?</h1>
-          <p className="muted">24개 문항에 답하면 나의 MBTI를 알 수 있어요.</p>
+          <p className="muted">{QUESTIONS.length}개 문항에 답하면 나의 MBTI를 알 수 있어요.</p>
           <div className="divider" />
           <Link href="/test" className="btn">
             MBTI 검사 시작하기
