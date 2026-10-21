@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Character from "@/components/Character";
@@ -78,6 +79,11 @@ export default function LoginPage() {
           </button>
         </form>
         {message && <p role="alert">{message}</p>}
+        {mode === "login" && (
+          <p style={{ marginTop: 12 }}>
+            <Link href="/forgot-password">비밀번호를 잊으셨나요?</Link>
+          </p>
+        )}
         <p style={{ marginTop: 16 }}>
           <button
             type="button"
