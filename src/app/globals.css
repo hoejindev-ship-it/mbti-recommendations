@@ -420,6 +420,11 @@ input:focus {
   margin-top: 8px;
   font-size: 0.92rem;
 }
+.place-note {
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--brown);
+}
 .place-empty {
   font-size: 0.92rem;
   opacity: 0.75;

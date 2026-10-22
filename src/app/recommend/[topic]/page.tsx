@@ -151,6 +151,9 @@ export default async function RecommendPage({
                 </div>
                 {place ? (
                   <div className="place">
+                    {place.fallback && (
+                      <p className="place-note">이 지역엔 딱 맞는 곳이 적어서 가까운 성격의 장소를 골랐어요.</p>
+                    )}
                     {place.image && (
                       // 공공누리 이미지는 변형하지 않고 그대로 보여 준다(잘라내지 않음).
                       // eslint-disable-next-line @next/next/no-img-element

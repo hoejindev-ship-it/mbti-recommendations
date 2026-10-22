@@ -55,6 +55,7 @@ describe("pickPlaces", () => {
     const { fetcher } = fakeFetcher({ B: [place("b")], F: [place("f")] });
     const { places } = await pickPlaces(region, [["A", "B"], ["A"]], ["F"], fetcher, () => 0);
     expect(places.map((p) => p?.id)).toEqual(["b", "f"]);
+    expect(places.map((p) => p?.fallback)).toEqual([undefined, true]);
   });
 
   it("후보가 모자라면 남는 자리는 null", async () => {

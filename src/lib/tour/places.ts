@@ -10,6 +10,8 @@ export type Place = {
   lat?: number;
   lng?: number;
   category?: string;
+  /** 유형별 분류에서 못 찾아 주제 전체에서 대신 고른 장소인지 */
+  fallback?: boolean;
 };
 
 export type PlaceFetcher = (region: Region, category: string) => Promise<Place[]>;
@@ -96,13 +98,15 @@ export async function pickPlaces(
   let anySucceeded = false;
   for (const codes of criteria) {
     let chosen: Place | null = null;
-    for (const code of [...codes, ...fallback]) {
-      const list = await load(code);
+    const steps = [...codes.map((code) => ({ code, fallback: false })), ...fallback.map((code) => ({ code, fallback: true }))];
+    for (const step of steps) {
+      const list = await load(step.code);
       if (list === null) continue;
       anySucceeded = true;
       const candidates = list.filter((p) => !used.has(p.id));
       if (candidates.length > 0) {
-        chosen = candidates[Math.floor(random() * candidates.length)];
+        const picked = candidates[Math.floor(random() * candidates.length)];
+        chosen = step.fallback ? { ...picked, fallback: true } : picked;
         break;
       }
     }
