@@ -57,7 +57,61 @@ async function runProbe(key: string, probe: Probe) {
   }
 }
 
-export async function GET() {
+async function list(key: string, op: string, params: Record<string, string>) {
+  const qs = new URLSearchParams({
+    serviceKey: key,
+    MobileOS: "ETC",
+    MobileApp: "mbti-recommendations",
+    _type: "json",
+    numOfRows: "100",
+    pageNo: "1",
+    ...params,
+  });
+  const res = await fetch(`${BASE}/${op}?${qs}`, { cache: "no-store" });
+  const body = await res.json().catch(() => null);
+  const items = body?.response?.body?.items;
+  return (items && typeof items === "object" ? items.item ?? [] : []) as Record<string, string>[];
+}
+
+// 시도/시군구 코드와 분류 코드 트리, 정렬 옵션을 한 번에 덤프한다.
+async function dump(key: string) {
+  const sido = await list(key, "areaCode2", {});
+  const regions = [];
+  for (const s of sido) {
+    const sgg = await list(key, "areaCode2", { areaCode: s.code });
+    regions.push({ code: s.code, name: s.name, sigungu: sgg.map((g) => [g.code, g.name]) });
+  }
+  const categories: Record<string, unknown> = {};
+  for (const cat1 of ["A01", "A02", "A03", "A04", "A05"]) {
+    const lvl2 = await list(key, "categoryCode2", { cat1 });
+    categories[cat1] = await Promise.all(
+      lvl2.map(async (c2) => ({
+        code: c2.code,
+        name: c2.name,
+        children: (await list(key, "categoryCode2", { cat1, cat2: c2.code })).map((c3) => [c3.code, c3.name]),
+      }))
+    );
+  }
+  const arrange: Record<string, unknown> = {};
+  for (const a of ["A", "C", "O", "Q", "R"]) {
+    const items = await list(key, "areaBasedList2", { contentTypeId: "39", areaCode: "7", arrange: a, numOfRows: "5" });
+    arrange[a] = items.map((i) => [i.title, Boolean(i.firstimage), i.modifiedtime, (i.firstimage ?? "").slice(0, 40)]);
+  }
+  const counts: Record<string, number> = {};
+  for (const [area, name] of [["1", "서울"], ["7", "울산"], ["5", "광주"]]) {
+    for (const t of ["12", "14", "28", "38", "39"]) {
+      const qs = new URLSearchParams({
+        serviceKey: key, MobileOS: "ETC", MobileApp: "mbti-recommendations", _type: "json",
+        numOfRows: "1", pageNo: "1", contentTypeId: t, areaCode: area,
+      });
+      const body = await (await fetch(`${BASE}/areaBasedList2?${qs}`, { cache: "no-store" })).json().catch(() => null);
+      counts[`${name}-${t}`] = body?.response?.body?.totalCount ?? -1;
+    }
+  }
+  return { regions, categories, arrange, counts };
+}
+
+export async function GET(request: Request) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -66,6 +120,11 @@ export async function GET() {
 
   const key = process.env.TOUR_API_KEY;
   if (!key) return NextResponse.json({ error: "TOUR_API_KEY not set" }, { status: 500 });
+
+  if (new URL(request.url).searchParams.get("mode") === "dump") {
+    const json = JSON.stringify(await dump(key)).replaceAll(key, "***");
+    return new NextResponse(json, { headers: { "content-type": "application/json" } });
+  }
 
   const results = [];
   for (const probe of PROBES) results.push(await runProbe(key, probe));
